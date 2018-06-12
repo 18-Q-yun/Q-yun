@@ -1,1 +1,2 @@
 This branch of master is to save code. 
+本次更新中使用C++代码实现了与系统MYSQL的交互，同时建立了用户信息表、创建目录等小demo，后期持续更改
