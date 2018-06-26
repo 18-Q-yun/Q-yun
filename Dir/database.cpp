@@ -1,10 +1,12 @@
 #include "database.h"
+#include <QList>
+
 int currentLevel=1;
 QString currentDirName;
- dataBase::dataBase( QSqlDatabase dataBase)
+ dataBase::dataBase()
 {
-  dataBase=QSqlDatabase::addDatabase("QMYSQL");
-  m_database=dataBase;
+  m_database=QSqlDatabase::addDatabase("QMYSQL");
+
 }
 
 void dataBase::initDataBase()
@@ -82,7 +84,6 @@ QString dataBase::createLevelDirTable(int level,QString account)
      QSqlQuery query(m_database);
 
       QString tablename;
-//      query.prepare("create table ?(filename varchar(20) primary key,lastfilename varchar(20))");
 
        switch (level) {
        case 1:
@@ -129,14 +130,29 @@ QString dataBase::createLevelDirTable(int level,QString account)
 
 }
 
-QSqlQuery dataBase::selectLevelDir(QString levelDirTableName)
+QList<QString> dataBase::selectLevelDir(QString levelDirTableName,QString lastfilename)
 {
     QSqlQuery query(m_database);
-    query.prepare("select * from ?");
-    query.addBindValue(levelDirTableName);
-    query.exec();
-    return query;
+   auto success=query.exec(QString("select * from %1 where lastfilename='%2'").arg(levelDirTableName).arg(lastfilename));
+    if(success){
+        qDebug()<<"select "<<levelDirTableName<<"sucees";
+    }else{
+           qDebug()<<"select "<<levelDirTableName<<"fail";
+    }
+
+    QList<QString>  filenames;
+
+    while(query.next()){
+           filenames<<query.value(0).toString();
+
+    }
+    return filenames;
 }
+//int dataBase::test(){
+//   int i=1;
+
+//    return i;
+//}
 
 void dataBase::insertLevelDir(QString levelDirTableName,QString filename ,QString lastfilename)
 {
