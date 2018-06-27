@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>TitleButton.qml</file>
+        <file>图片/min.png</file>
+        <file>图片/min1.png</file>
+        <file>图片/min2.png</file>
+        <file>图片/min3.png</file>
+        <file>图片/min4.png</file>
+        <file>图片/max.png</file>
+        <file>图片/max1.png</file>
+        <file>图片/max2.png</file>
+        <file>图片/max3.png</file>
+        <file>图片/max4.png</file>
+        <file>图片/close.png</file>
+        <file>图片/close1.png</file>
+        <file>图片/close2.png</file>
+        <file>图片/close3.png</file>
+        <file>图片/close4.png</file>
+        <file>图片/restore.png</file>
+        <file>图片/restore1.png</file>
+        <file>图片/restore2.png</file>
+        <file>图片/restore3.png</file>
+        <file>图片/restore4.png</file>
+        <file>图片/yun_icon.png</file>
+        <file>TitleBar.qml</file>
+        <file>Login.qml</file>
+        <file>Register.qml</file>
+    </qresource>
+</RCC>
