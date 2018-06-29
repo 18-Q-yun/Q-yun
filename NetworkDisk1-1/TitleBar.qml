@@ -1,21 +1,26 @@
 import QtQuick 2.0
+import QtQuick.Controls 2.1
 
 Rectangle {
 
-    property int mainWindowX
-    //用来存储主窗口x坐标
-    property int mainWindowY
-    //存储窗口y坐标
-    property int xMouse
-    //存储鼠标x坐标
-    property int yMouse
     id: mainTitle //创建标题栏
+    z: 0
+    property int mainWindowX
+    property int mainWindowY
+    property int xMouse
+    property int yMouse
+    property int currentActivity: 1
+
+    signal mypanstart
+    signal transmitstart
+    signal sharestart
     anchors.top: mainWindow.top //对标题栏定位
     anchors.left: mainWindow.left
     anchors.right: mainWindow.right
-    height: 40 //设置标题栏高度
     width: mainWindow.width
-    color: "lightblue" //设置标题栏背景颜色
+    height: 50
+
+    color: "#F5F5F5" //设置标题栏背景颜色
 
     Image {
         id: appIcon
@@ -26,47 +31,144 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 5
         source: "./图片/yun_icon.png"
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+
+            }
+        }
     }
+
     Text {
         id: appName
         anchors.left: appIcon.right
+        anchors.leftMargin: 10
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 5
+        anchors.bottomMargin: 10
         text: qsTr("Q-Yun盘")
         font.bold: true
     }
-    //    Row {
-    //        anchors.left: appName.right
-    //        anchors.leftMargin: 40
-    //        anchors.bottom: parent.bottom
-    //        anchors.bottomMargin: 5
-    //        spacing: 50
-    //        Text {
-    //            id: myNetLabel
 
-    //            text: qsTr("我的网盘")
-    //            font.bold: true
-    //        }
-    //        Text {
-    //            id: transeferListLabel
+    Rectangle {
+        id: mypan
+        z: 1
+        anchors.left: appName.right
+        anchors.leftMargin: 80
+        anchors.bottom: parent.bottom
+        width: mypantext.width
+        height: 30
+        color: "#F5F5F5"
+        Text {
+            id: mypantext
+            text: qsTr("我的网盘")
+            anchors.centerIn: parent
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+                onEntered: mypantext.color = "#00BBFF"
+                onExited: mypantext.color = "black"
+                onClicked: {
+                    mypantext.color = "#00BBFF"
+                    mypanstart()
+                    mypanBar.visible = true
+                }
+            }
 
-    //            text: qsTr("传输列表")
-    //            font.bold: true
-    //        }
-    //        Text {
-    //            id: friendSharelabel
+            Rectangle {
+                id: mypanBar
+                width: mypantext.width
+                height: 2
+                anchors.left: mypantext.left
+                anchors.top: mypantext.top
+                anchors.topMargin: 20
+                visible: false
+                color: "#00BBFF"
+            }
+        }
+    }
 
-    //            text: qsTr("好友分享")
-    //            font.bold: true
-    //        }
-    //        Text {
-    //            id: importantlabel
+    Rectangle {
+        id: pathList
+        z: 1
+        anchors.left: mypan.right
+        anchors.leftMargin: 50
+        anchors.bottom: parent.bottom
+        color: "#F5F5F5"
+        width: pathListText.width
+        height: 30
+        Text {
+            id: pathListText
+            text: qsTr("传输列表")
+            anchors.centerIn: parent
 
-    //            text: qsTr("功能宝箱")
-    //            font.bold: true
-    //        }
-    //    }
+            Rectangle {
+                id: pathBar
+                width: pathListText.width
+                height: 2
+                anchors.left: pathListText.left
+                anchors.top: pathListText.top
+                anchors.topMargin: 20
+                visible: false
+                color: "#00BBFF"
+            }
+        }
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            onEntered: pathListText.color = "#00BBFF"
+            onExited: {
+                pathBar.visible = false
+                pathListText.color = "black"
+            }
+            onClicked: {
+                transmitstart()
+                pathBar.visible = true
+            }
+        }
+    }
+
+    Text {
+        id: shareWithFriend
+        z: 1
+        text: qsTr("好友分享")
+        anchors.left: pathList.right
+        anchors.leftMargin: 50
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            onEntered: shareWithFriend.color = "#00BBFF"
+            onExited: {
+
+                shareWithFriend.color = "black"
+            }
+            onClicked: {
+                console.log("share222")
+                sharestart()
+            }
+        }
+    }
+
+    Text {
+        id: functionBox
+        z: 1
+        text: qsTr("功能宝箱")
+        anchors.left: shareWithFriend.right
+        anchors.leftMargin: 50
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
+
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            onEntered: functionBox.color = "#00BBFF"
+            onExited: functionBox.color = "black"
+        }
+    }
+
     MouseArea {
+
         //为窗口添加鼠标事件
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton //只处理鼠标左键

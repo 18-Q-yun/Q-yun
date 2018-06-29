@@ -24,7 +24,12 @@
         <file>图片/restore4.png</file>
         <file>图片/yun_icon.png</file>
         <file>TitleBar.qml</file>
-        <file>Login.qml</file>
-        <file>Register.qml</file>
+        <file>mypan/Cheif.qml</file>
+        <file>mypan/LeftfunctionList.qml</file>
+        <file>Mypan.qml</file>
+        <file>share/SCheif.qml</file>
+        <file>Share.qml</file>
+        <file>transmit/TCheif.qml</file>
+        <file>Transmit.qml</file>
     </qresource>
 </RCC>

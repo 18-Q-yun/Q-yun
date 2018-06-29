@@ -3,7 +3,7 @@ import QtQuick 2.0
 Rectangle {
     width: 30
     height: 30
-    color: "lightblue"
+    color: "#F5F5F5"
     //    radius: 10 //设置圆角半径
     property string normalPath
     //按钮正常和鼠标离开按钮区后的图片路径
