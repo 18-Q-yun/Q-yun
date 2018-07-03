@@ -9,8 +9,13 @@ Rectangle {
     property int mainWindowY
     property int xMouse
     property int yMouse
-    property int currentActivity: 1
 
+    property int flag1: 1
+    property int flag11: 1
+    property int flag2: 1
+    property int flag22: 1
+    property int flag3: 1
+    property int flag33: 1
     signal mypanstart
     signal transmitstart
     signal sharestart
@@ -49,105 +54,151 @@ Rectangle {
         font.bold: true
     }
 
-    Rectangle {
-        id: mypan
+    Text {
+        id: mypantext
         z: 1
         anchors.left: appName.right
         anchors.leftMargin: 80
         anchors.bottom: parent.bottom
-        width: mypantext.width
-        height: 30
-        color: "#F5F5F5"
-        Text {
-            id: mypantext
-            text: qsTr("我的网盘")
-            anchors.centerIn: parent
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                onEntered: mypantext.color = "#00BBFF"
-                onExited: mypantext.color = "black"
-                onClicked: {
+        anchors.bottomMargin: 15
+        text: qsTr("我的网盘")
+        color: "#00BBFF"
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            onEntered: {
+                flag1 = 2
+                mypantext.color = "#00BBFF"
+            }
+            onExited: {
+                if (flag1 == 2) {
+                    if (flag11 == 3)
+                        mypantext.color = "#00BBFF"
+                    else
+                        mypantext.color = "black"
+                } else if (flag11 == 3) {
                     mypantext.color = "#00BBFF"
-                    mypanstart()
-                    mypanBar.visible = true
                 }
             }
-
-            Rectangle {
-                id: mypanBar
-                width: mypantext.width
-                height: 2
-                anchors.left: mypantext.left
-                anchors.top: mypantext.top
-                anchors.topMargin: 20
-                visible: false
-                color: "#00BBFF"
+            onClicked: {
+                flag11 = 3
+                flag22 = 4
+                flag33 = 4
+                mypanstart()
+                mypanBar.visible = true
+                pathListText.color = "black"
+                pathBar.visible = false
+                shareWithFriend.color = "black"
+                pathShare.visible = false
             }
         }
     }
 
     Rectangle {
-        id: pathList
+        id: mypanBar
+        width: mypantext.width
+        height: 2
+        anchors.left: mypantext.left
+        anchors.top: mypantext.top
+        anchors.topMargin: 23
+        visible: true
+        color: "#00BBFF"
+    }
+
+    Text {
+        id: pathListText
         z: 1
-        anchors.left: mypan.right
+        anchors.left: mypantext.right
         anchors.leftMargin: 50
         anchors.bottom: parent.bottom
-        color: "#F5F5F5"
-        width: pathListText.width
-        height: 30
-        Text {
-            id: pathListText
-            text: qsTr("传输列表")
-            anchors.centerIn: parent
-
-            Rectangle {
-                id: pathBar
-                width: pathListText.width
-                height: 2
-                anchors.left: pathListText.left
-                anchors.top: pathListText.top
-                anchors.topMargin: 20
-                visible: false
-                color: "#00BBFF"
-            }
-        }
+        anchors.bottomMargin: 15
+        text: qsTr("传输列表")
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
-            onEntered: pathListText.color = "#00BBFF"
+            onEntered: {
+                flag2 = 2
+                pathListText.color = "#00BBFF"
+            }
             onExited: {
-                pathBar.visible = false
-                pathListText.color = "black"
+                if (flag2 == 2) {
+                    if (flag22 == 3)
+                        pathListText.color = "#00BBFF"
+                    else
+                        pathListText.color = "black"
+                } else if (flag22 == 3)
+                    pathListText.color = "#00BBFF"
             }
             onClicked: {
+                flag22 = 3
+                flag11 = 4
+                flag33 = 4
                 transmitstart()
                 pathBar.visible = true
+                mypantext.color = "black"
+                mypanBar.visible = false
+                shareWithFriend.color = "black"
+                pathShare.visible = false
             }
         }
+    }
+    Rectangle {
+        id: pathBar
+        width: pathListText.width
+        height: 2
+        anchors.left: pathListText.left
+        anchors.top: pathListText.top
+        anchors.topMargin: 23
+        visible: false
+        color: "#00BBFF"
     }
 
     Text {
         id: shareWithFriend
         z: 1
         text: qsTr("好友分享")
-        anchors.left: pathList.right
+        anchors.left: pathListText.right
         anchors.leftMargin: 50
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
+        anchors.bottomMargin: 15
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
-            onEntered: shareWithFriend.color = "#00BBFF"
+            onEntered: {
+                flag3 = 2
+                shareWithFriend.color = "#00BBFF"
+            }
             onExited: {
-
-                shareWithFriend.color = "black"
+                if (flag3 == 2) {
+                    if (flag33 == 3)
+                        shareWithFriend.color = "#00BBFF"
+                    else
+                        shareWithFriend.color = "black"
+                } else if (flag33 == 3)
+                    shareWithFriend.color = "#00BBFF"
             }
             onClicked: {
-                console.log("share222")
+                flag33 = 3
+                flag11 = 4
+                flag22 = 4
                 sharestart()
+                pathShare.visible = true
+                pathListText.color = "black"
+                pathBar.visible = false
+                mypantext.color = "black"
+                mypanBar.visible = false
             }
         }
+    }
+    Rectangle {
+        id: pathShare
+        width: shareWithFriend.width
+        height: 2
+        anchors.left: shareWithFriend.left
+        anchors.top: shareWithFriend.top
+        anchors.topMargin: 23
+        visible: false
+        color: "#00BBFF"
     }
 
     Text {
@@ -157,7 +208,7 @@ Rectangle {
         anchors.left: shareWithFriend.right
         anchors.leftMargin: 50
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
+        anchors.bottomMargin: 15
 
         MouseArea {
             anchors.fill: parent
@@ -190,7 +241,7 @@ Rectangle {
         id: closeTitleBar
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 5
+        anchors.bottomMargin: 15
         normalPath: "./图片/close1.png"
         enterPath: "./图片/close2.png"
         pressPath: "./图片/close3.png"
@@ -203,7 +254,7 @@ Rectangle {
         id: maxTitleBar
         anchors.right: closeTitleBar.left
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 5
+        anchors.bottomMargin: 15
         normalPath: "./图片/max1.png"
         enterPath: "./图片/max2.png"
         pressPath: "./图片/max3.png"
@@ -216,7 +267,7 @@ Rectangle {
         id: minTitleBar
         anchors.right: maxTitleBar.left
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 5
+        anchors.bottomMargin: 15
         normalPath: "./图片/min1.png"
         enterPath: "./图片/min2.png"
         pressPath: "./图片/min3.png"
