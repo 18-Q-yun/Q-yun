@@ -53,11 +53,11 @@ ApplicationWindow {
         Connections {
             target: fileDialog
             onCompleteChoose: {
-                for (var i = 0; i !== fileDialog.fileUrls.length; i++)
-                    console.log(fileDialog.fileUrls[i])
-                //                client.setResource(fileDialog.fileUrls)
-                //                client.setFlag(1)
-                //                client.selectWay()
+                for(var i = 0; i !== fileDialog.fileUrls.length; i++)
+                    client.setResource(fileDialog.fileUrls[i])
+                client.coutResource()
+                client.setFlag(1)
+                client.selectWay()
             }
         }
     }
@@ -78,7 +78,7 @@ ApplicationWindow {
         MouseArea {
             anchors.fill: download
             onClicked: {
-                client.setResource("/root/YUN/云盘传输/传输素材/库克与米娅.f4v")
+                //                client.setResource("/root/YUN/传输素材/爱的代价.mp3")
                 client.setFlag(0)
                 client.selectWay()
             }

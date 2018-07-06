@@ -6,16 +6,11 @@ using namespace boost::asio;
 using std::cout; using std::endl;
 using std::string;
 
-//boost::asio::io_service _io;
-//std::shared_ptr<ip::tcp::socket> sock(new ip::tcp::socket(_io));
-//ip::tcp::endpoint ep(ip::address::from_string("127.0.0.1"), 2001);
-
-
 Client::Client()
 {
     _sock = std::shared_ptr<ip::tcp::socket>(new ip::tcp::socket(_io));
     try{
-        _sock->async_connect(ip::tcp::endpoint(ip::address::from_string("127.0.0.1"), 2001), [](const boost::system::error_code &err){if(!err)cout << "Connect successful!" << endl;});
+        _sock->async_connect(ip::tcp::endpoint(ip::address::from_string("10.253.37.104"), 2001), [](const boost::system::error_code &err){if(!err)cout << "Connect successful!" << endl;});
         _io.run();
     } catch(std::exception& _e) {
         cout << _e.what() << endl;
@@ -40,13 +35,12 @@ void Client::selectWay()
     }
 
     if(*act == 'd') {
-        cout << _resource << endl;
-        boost::thread (boost::bind(&ResourceTransmission::clientDownloadResource, rt, _sock, _resource));
+        string resources = "/root/YUN.tar";
+        boost::thread (boost::bind(&ResourceTransmission::clientDownloadResource, rt, _sock, resources));
     }
     else if(*act == 's')
     {
-        cout << _resource << endl;
-        boost::thread (boost::bind(&ResourceTransmission::clientUploadResource, rt, _sock, _resource));
+        boost::thread (boost::bind(&ResourceTransmission::clientUploadResource, rt, _sock, _resources));
     }
 }
 
@@ -57,5 +51,21 @@ void Client::setFlag(int flag)
 
 void Client::setResource(QString s)
 {
-    _resource = string((const char*)s.toLocal8Bit());
+    string resource = string((const char*)s.toLocal8Bit());
+    auto reIterator = resource.begin();
+    int i = 0;
+    while(i < 1) {
+        if(*reIterator++ == '/')
+            i++;
+    }
+    string resourcePath;
+    while(reIterator++ != resource.end())
+        resourcePath += *reIterator;
+    _resources.push_back(resourcePath);
+}
+
+void Client::coutResource()
+{
+    for(auto r: _resources)
+        cout << r << endl;
 }

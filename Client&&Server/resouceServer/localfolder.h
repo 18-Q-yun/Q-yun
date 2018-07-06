@@ -1,6 +1,5 @@
-#ifndef FOLDER_H
-#define FOLDER_H
-
+#ifndef LOCALFOLDER_H
+#define LOCALFOLDER_H
 
 #include <iostream>
 #include <string>
@@ -9,16 +8,14 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-class  Folder
+class  LocalFolder
 {
 public:
-    Folder(std::string dirPath):_dirPath{dirPath}{}
+    LocalFolder(std::string dirPath):_dirPath{dirPath}{}
     bool createDirectory();
     bool deleteDirectory();
     bool exitDirectory();
 private:
     std::string _dirPath;
 };
-
-
-#endif // FOLDER_H
+#endif // LOCALFOLDER_H

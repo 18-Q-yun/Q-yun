@@ -5,14 +5,16 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     resourceserver.cpp \
-    folder.cpp \
     resourcetransmission.cpp \
-    clientmember.cpp
+    action.cpp \
+    localfolder.cpp \
+    resource.cpp
 
 QMAKE_LFLAGS += -lboost_system -lboost_thread -lpthread
 
 HEADERS += \
     resourceserver.h \
-    folder.h \
     resourcetransmission.h \
-    clientmember.h
+    action.h \
+    localfolder.h \
+    resource.h

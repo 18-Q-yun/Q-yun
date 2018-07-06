@@ -15,7 +15,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp \
     client.cpp \
     resourcetransmissio.cpp \
-    folder.cpp
+    localfolder.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,7 +33,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     client.h \
     resourcetransmissio.h \
-    folder.h
+    localfolder.h
 
 
 QMAKE_LFLAGS += -lboost_system -lboost_thread -lpthread

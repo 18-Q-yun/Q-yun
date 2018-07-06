@@ -6,3 +6,4 @@ This branch of master is to save code.
 5.本次提交增加了界面跳转的实现等
 6.修改了界面的BUG
 7.修改了客户端界面代码，重新封装了服务端
+8.可以同时上传多个文件

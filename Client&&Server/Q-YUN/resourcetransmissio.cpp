@@ -1,5 +1,5 @@
 #include "resourcetransmissio.h"
-#include "folder.h"
+#include "localfolder.h"
 
 #define MAX_DATA_LENGTH 1448
 
@@ -7,7 +7,19 @@ using std::cout; using std::endl;
 using std::string;
 using namespace boost::asio;
 
-void ResourceTransmission::clientUploadResource(std::shared_ptr<boost::asio::ip::tcp::socket> sock, string resource)
+void ResourceTransmission::clientUploadResource(std::shared_ptr<boost::asio::ip::tcp::socket> sock, std::vector<std::string> resources)
+{
+    char str[MAX_DATA_LENGTH];
+    int num2 = resources.size();
+    string flag = std::to_string(num2);
+    flag.copy(str, flag.size(), 0);
+    *(str + flag.size()) = '\0';
+    sock->write_some(buffer(str, MAX_DATA_LENGTH));
+    for(auto re: resources)
+        sendUploadResource(sock, re);
+}
+
+void ResourceTransmission::sendUploadResource(std::shared_ptr<ip::tcp::socket> sock, std::string resource)
 {
     char str[MAX_DATA_LENGTH];
     cout << "The resource path: ";
@@ -21,7 +33,7 @@ void ResourceTransmission::clientUploadResource(std::shared_ptr<boost::asio::ip:
         cout << _e.what() << endl;
     }
 
-    //资源名字
+    //    //资源名字
 
     std::ifstream ifs(resource, std::ios::binary);
     ifs.seekg(0, std::ios::end);
@@ -64,7 +76,7 @@ void ResourceTransmission::clientDownloadResource(std::shared_ptr<boost::asio::i
 
     resource.copy(str, resource.size(), 0);
     *(str + resource.size()) = '\0';
-        cout << "The str resource name" << str << endl;
+    cout << "The str resource name" << str << endl;
     try{
         sock->write_some(buffer(str, MAX_DATA_LENGTH));
         sock->read_some(buffer(str, MAX_DATA_LENGTH));//get resource size
@@ -74,7 +86,7 @@ void ResourceTransmission::clientDownloadResource(std::shared_ptr<boost::asio::i
 
     //传输到相应的文件夹中
     string resourcePath = "/root/downloadResource";
-    Folder folder(resourcePath);
+    LocalFolder folder(resourcePath);
     bool flag = folder.exitDirectory();
     cout << flag << endl;
     while(!flag)
