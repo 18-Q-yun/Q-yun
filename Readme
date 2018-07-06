@@ -7,3 +7,4 @@ This branch of master is to save code.
 6.修改了界面的BUG
 7.修改了客户端界面代码，重新封装了服务端
 8.可以同时上传多个文件
+9.添加了Account的代理AccountProxy、代管者AccountBroker。Folder的代理FolderProxy、代管者AccountBroker。
