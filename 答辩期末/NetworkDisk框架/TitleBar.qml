@@ -252,17 +252,16 @@ Rectangle {
         //为窗口添加鼠标事件
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton //只处理鼠标左键
+        property point clickPos: "0,0"
         onPressed: {
             //接收鼠标按下事件
-            xMouse = mouseX
-            yMouse = mouseY
-            mainWindowX = mainWindow.x
-            mainWindowY = mainWindow.y
+            clickPos = Qt.point(mouseX, mouseY)
         }
         onPositionChanged: {
             //鼠标按下后改变位置
-            mainWindow.x = mainWindowX + (mouseX - xMouse)
-            mainWindow.y = mainWindowY + (mouseY - yMouse)
+            var delta = Qt.point(mouseX - clickPos.x, mouseY - clickPos.y)
+            mainWindow.setX(mainWindow.x + delta.x)
+            mainWindow.setY(mainWindow.y + delta.y)
         }
     }
 

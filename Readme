@@ -10,3 +10,4 @@ This branch of master is to save code.
 9.添加了Account的代理AccountProxy、代管者AccountBroker。Folder的代理FolderProxy、代管者AccountBroker。
 10.在客户端，完善了登陆、注册，显示文件夹、添加文件夹等目录结构
 11.完成了并发上传、下载、新建文件夹，正确显示目录
+12.修改了客户端界面拖拽时抖动问题。
